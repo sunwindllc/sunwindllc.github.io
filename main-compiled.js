@@ -52,6 +52,13 @@ $(document).ready(function () {
     }
   });
 
+  $("#usage_data_01").blur(function () {
+    const defaultValue = $(this).val()
+    document.querySelectorAll("[id^=usage_data]").forEach((month) =>
+      month.value = defaultValue
+    )
+  })
+
   let system_capacity = 0;
 
   function getSystemCapacity() {
