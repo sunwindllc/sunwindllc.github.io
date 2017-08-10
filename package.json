@@ -1,0 +1,25 @@
+{
+  "name": "sunwind_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "d3": "^4.9.1"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ptrfrncsmrph/sunwind_app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ptrfrncsmrph/sunwind_app/issues"
+  },
+  "homepage": "https://github.com/ptrfrncsmrph/sunwind_app#readme"
+}

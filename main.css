@@ -1,0 +1,160 @@
+@font-face {
+  font-family: "Custom Grotesk";
+  font-weight: 400;
+  src: url("fonts/Atlas Grotesk Web-Regular.eot");
+  src: url("fonts/Atlas Grotesk Web-Regular.eot?#iefix") format("embedded-opentype"),
+       url("fonts/Atlas Grotesk Web-Regular.woff") format("woff"),
+       url("fonts/Atlas Grotesk Web-Regular.ttf") format("truetype"),
+       url("fonts/Atlas Grotesk Web-Regular.svg#AtlGrot") format("svg");
+}
+
+@font-face {
+  font-family: "Custom Grotesk";
+  font-weight: 600;
+  src: url("fonts/Atlas Grotesk Web-Bold.eot");
+  src: url("fonts/Atlas Grotesk Web-Bold.eot?#iefix") format("embedded-opentype"),
+       url("fonts/Atlas Grotesk Web-Bold.woff") format("woff"),
+       url("fonts/Atlas Grotesk Web-Bold.ttf") format("truetype"),
+       url("fonts/Atlas Grotesk Web-Bold.svg#AtlGrot") format("svg");
+}
+
+@font-face {
+  font-family: "Custom Grotesk";
+  font-weight: 900;
+  src: url("fonts/Atlas Grotesk Web-Black.eot");
+  src: url("fonts/Atlas Grotesk Web-Black.eot?#iefix") format("embedded-opentype"),
+       url("fonts/Atlas Grotesk Web-Black.woff") format("woff"),
+       url("fonts/Atlas Grotesk Web-Black.ttf") format("truetype"),
+       url("fonts/Atlas Grotesk Web-Black.svg#AtlGrot") format("svg");
+}
+
+@font-face {
+  font-family: "Custom Mono";
+  font-weight: 400;
+  src: url("fonts/Atlas Typewriter Web-Regular.eot");
+  src: url("fonts/Atlas Typewriter Web-Regular.eot?#iefix") format("embedded-opentype"),
+       url("fonts/Atlas Typewriter Web-Regular.woff") format("woff"),
+       url("fonts/Atlas Typewriter Web-Regular.ttf") format("truetype"),
+       url("fonts/Atlas Typewriter Web-Regular.svg") format("svg");
+}
+
+@font-face {
+  font-family: "Custom Mono";
+  font-weight: 900;
+  src: url("fonts/Atlas Typewriter Web-Black.eot");
+  src: url("fonts/Atlas Typewriter Web-Black.eot?#iefix") format("embedded-opentype"),
+       url("fonts/Atlas Typewriter Web-Black.woff") format("woff"),
+       url("fonts/Atlas Typewriter Web-Black.ttf") format("truetype"),
+       url("fonts/Atlas Typewriter Web-Black.svg") format("svg");
+}
+
+
+body {
+  font-family: "Custom Grotesk";
+}
+
+.form {
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.output {
+  padding: 20px;
+  margin: 20px 0;
+  border: none;
+}
+
+.btn {
+  text-transform: uppercase;
+  font-size: 1rem !important;
+}
+
+.btn-group {
+  padding: 15px;
+}
+
+.btn-round {
+  border-radius: 20px;
+}
+
+.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    outline: none;
+    border: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    border-radius: 0;
+    border-bottom: 1px solid #eee;
+    padding: 0px;
+    line-height: 20px;
+    text-align: right;
+    background: transparent;
+    outline: none;
+}
+
+select {
+  background: none;
+  -webkit-appearance: none;
+}
+
+.input-group-addon {
+  border: none;
+  background: none;
+}
+
+label {
+  font-weight: 400;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+th {
+  font-weight: 400;
+}
+
+/* D3 stuff */
+
+.axis .domain {
+  display: none;
+}
+
+.output h5 {
+  text-align: center;
+}
+
+.output td:first-child {
+  text-align: right;
+}
+
+.arc text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.output td {
+  border: none !important;
+  font-size: 1.25rem;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+.positive {
+  fill: #e5f5e0;
+}
+
+.negative {
+  fill: #fee0d2;
+}
+
+.line {
+  fill: none;
+  stroke: black;
+}

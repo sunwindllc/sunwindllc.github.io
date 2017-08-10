@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/d3/d3.min.js"></script>
+<script type="text/javascript" src="/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="main.css" />
+
+<div class="container">
+  <div class="row">
+    <form id="form">
+      <div class="form col-md-6 col-xs-12">
+        <div class="row">
+          <div id="array_row_0" class="array">
+            <div class="col-xs-12">
+              <h5>Array specifications</h5>
+            </div>
+            <div class="form-group col-lg-3 col-md-4 col-xs-6">
+              <label for="quantity">Quantity</label>
+              <input type="text" class="form-control quantity" name="quantity" id="quantity">
+            </div>
+            <div class="form-group col-lg-3 col-md-4 col-xs-6">
+              <label for="module_wattage">Module Rating</label>
+              <div class="input-group">
+                <input type="text" class="form-control module_wattage" name="module_wattage" id="module_wattage">
+                <span class="input-group-addon">W (DC)</span>
+              </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-4 col-xs-6">
+              <label for="tilt">Tilt</label>
+              <span class="input-group">
+                <input type="text" class="form-control" name="tilt" id="tilt" placeholder="0 to 90">
+                <span class="input-group-addon">&deg;</span>
+              </span>
+            </div>
+            <div class="form-group col-lg-3 col-md-4 col-xs-6">
+              <label for="azimuth">Azimuth</label>
+              <span class="input-group">
+                <input type="text" class="form-control" name="azimuth" id="azimuth" placeholder="0 to 360">
+                <span class="input-group-addon">&deg;</span>
+              </span>
+            </div>
+            <div class="form-group col-lg-3 col-md-4 col-xs-6">
+              <label for="losses">Losses</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="losses" id="losses" value="13">
+                <span class="input-group-addon">%</span>
+              </div>
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-xs-6">
+              <label for="module_type">Module type</label>
+              <select class="form-control" name="module_type" id="module_type">
+                <option value="0" selected="selected">Standard</option>
+                <option value="1">Premium</option>
+                <option value="2">Thin film</option>
+              </select>
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-xs-6">
+              <label for="array_type">Array type</label>
+              <select class="form-control" name="array_type" id="array_type">
+                <option value="0">Fixed - Open Rack</option>
+                <option value="1" selected="selected">Fixed - Roof Mounted</option>
+                <option value="2">1-Axis</option>
+                <option value="3">1-Axis Backtracking</option>
+                <option value="4">2-Axis</option>
+              </select>
+            </div>
+            <div class="col-xs-12">
+              <hr>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <h5>Pricing and incentive variables</h5>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label for="price_per_watt">Price per Watt</label>
+            <div class="input-group">
+             <span class="input-group-addon">$</span>
+             <input type="text" class="form-control" name="price_per_watt" id="price_per_watt" placeholder="e.g., 5.50">
+             <span class="input-group-addon">/ W</span>
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label for="total_price">Total price</label>
+            <div class="input-group">
+             <span class="input-group-addon">$</span>
+             <input type="text" class="form-control" name="total_price" id="total_price" placeholder="">
+            </div>
+          </div>
+          <div class="form-group date col-md-4 col-xs-6">
+            <label for="start_date">Month operable</label>
+            <div class="input-group date" id="date_picker">
+            <input type="text" class="form-control" name="start_date" id="start_date">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar">
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label for="utility_rate">Utility rate</label>
+            <div class="input-group">
+             <input type="text" class="form-control" name="utility_rate" id="utility_rate" placeholder="e.g., 17.5">
+             <span class="input-group-addon">&cent; / kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label for="utility_rate_incr">Utility rate increase</label>
+            <div class="input-group">
+             <input type="text" class="form-control" name="utility_rate_incr" id="utility_rate_incr" placeholder="e.g., 2.5" value="2.5">
+             <span class="input-group-addon">% / year</span>
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label for="srec_market_sector">SREC market sector</label>
+            <div class="input-group">
+              <select class="form-control" name="srec_market_sector" id="srec_market_sector">
+                <option value="0.80" selected="selected">A</option>
+                <option value="0.70">B</option>
+                <option value="0.65">C</option>
+                <option value="0.55">Managed Growth</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <hr>
+          </div>
+          <div class="col-xs-12">
+            <h5>Usage data</h5>
+          </div>
+          <!-- <div class="col-xs-12">
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-round btn-default active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Monthly
+              </label>
+              <label class="btn btn-round btn-default">
+                <input type="radio" name="options" id="option2" autocomplete="off"> Average
+              </label>
+            </div>
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-round btn-default active">
+                <input type="radio" name="options2" id="option3" autocomplete="off" checked> kWh
+              </label>
+              <label class="btn btn-round btn-default">
+                <input type="radio" name="options2" id="option4" autocomplete="off"> Dollars
+              </label>
+            </div>
+          </div> -->
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_01">January</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_01" id="usage_data_01" placeholder="" value="1195">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_02">February</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_02" id="usage_data_02" placeholder="" value="1051">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_03">March</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_03" id="usage_data_03" placeholder="" value="951">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_04">April</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_04" id="usage_data_04" placeholder="" value="760">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_05">May</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_05" id="usage_data_05" placeholder="" value="1232">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_06">June</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_06" id="usage_data_06" placeholder="" value="2027">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_07">July</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_07" id="usage_data_07" placeholder="" value="1895">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_08">August</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_08" id="usage_data_08" placeholder="" value="1203">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_09">September</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_09" id="usage_data_09" placeholder="" value="958">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_10">October</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_10" id="usage_data_10" placeholder="" value="930">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_11">November</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_11" id="usage_data_11" placeholder="" value="1088">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-4">
+            <label for="usage_data_12">December</label>
+            <div class="input-group">
+             <input type="text" class="form-control usage-data" name="usage_data_12" id="usage_data_12" placeholder="" value="1506">
+             <span class="input-group-addon">kWh</span>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <button type="button" class="btn btn-default btn-round" id="add_array"><span class="glyphicon glyphicon-plus"></span> Add array</button>
+            <button type="button" class="btn btn-default btn-round disabled" id="remove_array"><span class="glyphicon glyphicon-minus"></span> Remove array</button>
+            <button type="submit" class="btn btn-primary btn-round pull-right">Calculate</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="col-md-6 col-xs-12 output" id="output_0">
+    </div>
+    <div class="col-md-6 col-xs-12 output" id="output_1">
+      <svg width="500" height="300"></svg>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-xs-12 output" id="output_2">
+      <svg width="500" height="300"></svg>
+    </div>
+    <div class="col-md-6 col-xs-12 output" id="output_3">
+      <svg width="500" height="300"></svg>
+    </div>
+    <div class="col-xs-12 output" id="output_4">
+      <svg width="750" height="400"></svg>
+    </div>
+    <div class="col-md-6 col-xs-12 output" id="output_5">
+      <svg width="500" height="300"></svg>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="main-compiled.js"></script>
