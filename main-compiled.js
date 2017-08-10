@@ -145,7 +145,7 @@ $(document).ready(function () {
       parse_month = d3.timeParse("%m"), format_month = d3.timeFormat("%b"), parse_date = d3.timeParse("%m/%Y"), format = d3.timeFormat("%b %Y"), parse = d3.timeParse("%b %Y"), date = parse_date($("#start_date").val()), data_first_year = [], data_monthly = [], data_quarterly = [], data_annual = [], system_summary = [], initial_srec_value = 270, // Make this a form input
       month_number = 0, quarter_number = 0, current_month = 0, performance_factor = 0, per_annum_degradation = 0.007, // Make this a form input
       srec_annual_degradation = 0.05, // Make this a form input
-      monthly_output = 0, cumulative_output = 0, srec_cumulative_output = 0, net_metering_savings_accrued = 0, net_metering_savings_monthly = 0, current_srec_value = 0, srecs_accrued = 0, srecs_accrued_quarterly = 0, srec_revenue_accrued = 0, srec_revenue_quarterly = 0, current_system_value = 0, state_rebate = d3.min([0.15 * total_price, 1000]), federal_tax_credit = 0.3 * (total_price - state_rebate), system_cost_after = total_price - state_rebate - federal_tax_credit, initial_system_value = -system_cost_after;
+      monthly_output = 0, cumulative_output = 0, srec_cumulative_output = 0, net_metering_savings_accrued = 0, net_metering_savings_monthly = 0, current_srec_value = 0, srecs_accrued = 0, srecs_accrued_quarterly = 0, srec_revenue_accrued = 0, srec_revenue_quarterly = 0, current_system_value = 0, state_ITC = d3.min([0.15 * total_price, 1000]), federal_tax_credit = 0.3 * (total_price - state_ITC), system_cost_after = total_price - state_ITC - federal_tax_credit, initial_system_value = -system_cost_after;
 
       // HOW DOES THIS WORK?!?
       // The first part (map and map) returns the transposed (!) matrix,
@@ -226,7 +226,7 @@ $(document).ready(function () {
         "Nameplate capacity": system_capacity / 1000 + " kW DC",
         "Annual production (first year)": Math.round(annual_production).toLocaleString("en-US") + " kWh AC",
         "Annual production (average)": Math.round(cumulative_output / 25).toLocaleString("en-US") + " kWh AC",
-        "State rebate value": state_rebate.toLocaleString("en-US", { style: "currency", currency: "USD" }).slice(0, -3),
+        "State ITC value": state_ITC.toLocaleString("en-US", { style: "currency", currency: "USD" }).slice(0, -3),
         "Federal ITC value": federal_tax_credit.toLocaleString("en-US", { style: "currency", currency: "USD" }).slice(0, -3),
         "System cost less incentives": system_cost_after.toLocaleString("en-US", { style: "currency", currency: "USD" }).slice(0, -3),
         "Payback date": payback != null ? payback["Month"] : "Never",
