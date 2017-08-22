@@ -289,16 +289,25 @@ function render_p(srec_market_sector, annual_production, initial_srec_value, uti
 
   p.html("")
 
-  p.append("p")
-    .html(`<h4>Revenue / Savings (First Year)</h4>
+  p.append("div")
+    .html(`
+      <h4>Revenue / Savings (First Year)</h4>
 
-          <p><b>SREC II Revenue:</b> [${Math.round(annual_production).toLocaleString("en-US")} kWh x ${srec_market_sector * 100}%] x $${initial_srec_value / 1000}/kWh (current SREC rate) = ${Math.round(Math.round(annual_production) * srec_market_sector * (initial_srec_value / 1000)).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
+        <p><b>SREC II Revenue:</b> [${Math.round(annual_production).toLocaleString("en-US")} kWh &times; ${srec_market_sector * 100}%] &times; $${initial_srec_value / 1000}/kWh (current SREC rate) = ${Math.round(Math.round(annual_production) * srec_market_sector * (initial_srec_value / 1000)).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
 
-          <p><b>Net Metering Savings:</b> ${Math.round(annual_production).toLocaleString("en-US")} kWh x $${utility_rate}/kWh = ${Math.round(Math.round(annual_production) * utility_rate).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
+        <p><b>Net Metering Savings:</b> ${Math.round(annual_production).toLocaleString("en-US")} kWh &times; $${utility_rate}/kWh = ${Math.round(Math.round(annual_production) * utility_rate).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
 
-          <p><b>Total Annual Income:</b> ${Math.round(totalAnnualIncome).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
+        <p><b>Total Annual Income:</b> ${Math.round(totalAnnualIncome).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
+      `
+    )
 
-          <p><b>Balance After First Year Savings and Revenue:</b> ${system_cost_after.toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)} - ${totalAnnualIncome.toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)} = ${(system_cost_after - totalAnnualIncome).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>`)
+  p.append("div")
+    .html(`
+      <p><b>Balance After First Year Savings and Revenue:</b> ${system_cost_after.toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)} - ${totalAnnualIncome.toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)} = ${(system_cost_after - totalAnnualIncome).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
+
+      <p><b>Simple ROI:</b> ${system_cost_after.toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)} &divide; ${totalAnnualIncome.toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)} = ${(system_cost_after / totalAnnualIncome).toLocaleString("en-US")}</p>
+    `
+  )
 }
 
 function render(system_summary, data_first_year, data_monthly, data_quarterly, data_annual) {
