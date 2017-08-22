@@ -148,7 +148,7 @@ $(document).ready(function(){
           data_quarterly = [],
           data_annual = [],
           system_summary = [],
-          initial_srec_value = 270, // Make this a form input
+          initial_srec_value = +$("#initial_srec_value").val(),
           month_number = 0,
           quarter_number = 0,
           current_month = 0,
@@ -275,11 +275,31 @@ $(document).ready(function(){
         "Total SRECs generated"               : srecs_accrued
       }
 
+
+
       render(system_summary, data_first_year, data_monthly, data_quarterly, data_annual)
+      render_p(srec_market_sector, annual_production, initial_srec_value, utility_rate, system_cost_after)
     })
   })
 })
 
+function render_p(srec_market_sector, annual_production, initial_srec_value, utility_rate, system_cost_after) {
+  let p = d3.select("#output_p")
+  const totalAnnualIncome = Math.round(annual_production) * (utility_rate + srec_market_sector * (initial_srec_value / 1000))
+
+  p.html("")
+
+  p.append("p")
+    .html(`<h4>Revenue / Savings (First Year)</h4>
+
+          <p><b>SREC II Revenue:</b> [${Math.round(annual_production).toLocaleString("en-US")} kWh x ${srec_market_sector * 100}%] x $${initial_srec_value / 1000}/kWh (current SREC rate) = ${Math.round(Math.round(annual_production) * srec_market_sector * (initial_srec_value / 1000)).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
+
+          <p><b>Net Metering Savings:</b> ${Math.round(annual_production).toLocaleString("en-US")} kWh x $${utility_rate}/kWh = ${Math.round(Math.round(annual_production) * utility_rate).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
+
+          <p><b>Total Annual Income:</b> ${Math.round(totalAnnualIncome).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>
+
+          <p><b>Balance After First Year Savings and Revenue:</b> ${system_cost_after.toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)} - ${totalAnnualIncome.toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)} = ${(system_cost_after - totalAnnualIncome).toLocaleString("en-US", {style: "currency", currency: "USD"}).slice(0, -3)}</p>`)
+}
 
 function render(system_summary, data_first_year, data_monthly, data_quarterly, data_annual) {
 

@@ -107,21 +107,21 @@
               </span>
             </div>
           </div>
-          <div class="form-group col-md-4 col-xs-6">
+          <div class="form-group col-md-3 col-xs-6">
             <label for="utility_rate">Utility rate</label>
             <div class="input-group">
-             <input type="text" class="form-control" name="utility_rate" id="utility_rate" placeholder="e.g., 17.5">
+             <input type="text" class="form-control" name="utility_rate" id="utility_rate" placeholder="e.g., 17.5" value="20">
              <span class="input-group-addon">&cent; / kWh</span>
             </div>
           </div>
-          <div class="form-group col-md-4 col-xs-6">
+          <div class="form-group col-md-3 col-xs-6">
             <label for="utility_rate_incr">Utility rate increase</label>
             <div class="input-group">
              <input type="text" class="form-control" name="utility_rate_incr" id="utility_rate_incr" placeholder="e.g., 2.5" value="2.5">
              <span class="input-group-addon">% / year</span>
             </div>
           </div>
-          <div class="form-group col-md-4 col-xs-6">
+          <div class="form-group col-md-3 col-xs-6">
             <label for="srec_market_sector">SREC market sector</label>
             <div class="input-group">
               <select class="form-control" name="srec_market_sector" id="srec_market_sector">
@@ -132,6 +132,15 @@
               </select>
             </div>
           </div>
+          <div class="form-group col-md-3 col-xs-6">
+            <label for="initial_srec_value">Current SREC value</label>
+            <div class="input-group">
+             <span class="input-group-addon">$</span>
+             <input type="text" class="form-control" name="initial_srec_value" id="initial_srec_value" placeholder="245" value="245">
+             <span class="input-group-addon"> / kWh</span>
+            </div>
+          </div>
+
           <div class="col-xs-12">
             <hr>
           </div>
@@ -250,6 +259,8 @@
     </form>
     <div class="col-md-6 col-xs-12 output" id="output_0">
     </div>
+    <div class="col-md-6 col-xs-12 output" id="output_p">
+    </div>
     <div class="col-md-6 col-xs-12 output" id="output_1">
       <svg width="500" height="300"></svg>
     </div>
@@ -270,4 +281,4 @@
   </div>
 </div>
 
-<script type="text/javascript" src="main-compiled.js"></script>
+<script type="text/javascript" src="main.js"></script>
