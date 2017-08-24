@@ -27,26 +27,26 @@
             </div>
             <div class="form-group col-lg-3 col-md-4 col-xs-6">
               <label for="quantity">Quantity</label>
-              <input type="text" class="form-control quantity" name="quantity" id="quantity">
+              <input type="text" class="form-control quantity" name="quantity" id="quantity" value="20">
             </div>
             <div class="form-group col-lg-3 col-md-4 col-xs-6">
               <label for="module_wattage">Module Rating</label>
               <div class="input-group">
-                <input type="text" class="form-control module_wattage" name="module_wattage" id="module_wattage">
+                <input type="text" class="form-control module_wattage" name="module_wattage" id="module_wattage" value="320">
                 <span class="input-group-addon">W (DC)</span>
               </div>
             </div>
             <div class="form-group col-lg-3 col-md-4 col-xs-6">
               <label for="tilt">Tilt</label>
               <span class="input-group">
-                <input type="text" class="form-control" name="tilt" id="tilt" placeholder="0 to 90">
+                <input type="text" class="form-control" name="tilt" id="tilt" placeholder="0 to 90" value="26.6">
                 <span class="input-group-addon">&deg;</span>
               </span>
             </div>
             <div class="form-group col-lg-3 col-md-4 col-xs-6">
               <label for="azimuth">Azimuth</label>
               <span class="input-group">
-                <input type="text" class="form-control" name="azimuth" id="azimuth" placeholder="0 to 360">
+                <input type="text" class="form-control" name="azimuth" id="azimuth" placeholder="0 to 360" value="94">
                 <span class="input-group-addon">&deg;</span>
               </span>
             </div>
@@ -138,6 +138,15 @@
              <span class="input-group-addon">$</span>
              <input type="text" class="form-control" name="initial_srec_value" id="initial_srec_value" placeholder="245" value="245">
              <span class="input-group-addon"> / kWh</span>
+            </div>
+          </div>
+          <div class="form-group col-md-3 col-xs-6">
+            <label for="initial_srec_value">Nantucket Rebate?</label>
+            <div class="input-group">
+              <select class="form-control" name="nantucket_rebate" id="nantucket_rebate">
+                <option value="2500" selected="selected">$2,500</option>
+                <option value="0">None</option>
+              </select>
             </div>
           </div>
 
@@ -260,6 +269,8 @@
     <div class="col-md-6 col-xs-12 output" id="output_0">
     </div>
     <div class="col-md-6 col-xs-12 output" id="output_p">
+    </div>
+    <div class="col-xs-12 output" id="output_table">
     </div>
     <div class="col-md-6 col-xs-12 output" id="output_1">
       <svg width="500" height="300"></svg>

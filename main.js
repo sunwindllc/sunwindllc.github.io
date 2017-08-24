@@ -167,8 +167,9 @@ $(document).ready(function(){
           srec_revenue_quarterly = 0,
           current_system_value = 0,
           state_rebate = d3.min([(0.15 * total_price), 1000]),
-          federal_tax_credit = 0.3 * (total_price - state_rebate),
-          system_cost_after = total_price - state_rebate - federal_tax_credit,
+          nantucket_rebate = +$("#nantucket_rebate").val(),
+          federal_tax_credit = 0.3 * (total_price - nantucket_rebate),
+          system_cost_after = total_price - state_rebate - federal_tax_credit - nantucket_rebate,
           initial_system_value = -(system_cost_after)
 
       // HOW DOES THIS WORK?!?
@@ -197,6 +198,45 @@ $(document).ready(function(){
 
       data.map((a, b, c) => { c[b].push(+ac_monthly_consumed[b]) })
 
+      const maintenanceSchedule = [
+        0,
+        0,
+        0,
+        250,
+        0,
+        0,
+        300,
+        0,
+        0,
+        350,
+        0,
+        0,
+        400,
+        0,
+        0,
+        450,
+        0,
+        0,
+        500,
+        0,
+        0,
+        550,
+        0,
+        0,
+        600,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+
+      const insurancePerYear = 75
+      let srec_revenue_annual = 0,
+          srec_revenue_accrued_last_year = 0,
+          net_metering_savings_annual = 0,
+          net_metering_savings_accrued_last_year = 0
+
       data.forEach((a) => {
         data_first_year.push({
           "Month"                 : a[0],
@@ -208,7 +248,7 @@ $(document).ready(function(){
 
       let annual_production = d3.sum(data_first_year, ((d) => d["Energy Generated"]))
 
-      for (i = 0; i < (25 * 12); i++) {
+      for (i = 0; i <= (25 * 12); i++) {
         month_number = date.getMonth()
         current_month = format(date)
         performance_factor = 1 - ((i / 12) * per_annum_degradation)
@@ -252,6 +292,25 @@ $(document).ready(function(){
           "Utility rate"    : Math.round(current_utility_rate)
         })
 
+        if (i / 12 != 0 && i % 12 === 0) {
+          const insurance = Math.round(insurancePerYear * (1 + (i / 12) * .02))
+          srec_revenue_annual = Math.round(srec_revenue_accrued - srec_revenue_accrued_last_year)
+          net_metering_savings_annual = Math.round(net_metering_savings_accrued - net_metering_savings_accrued_last_year)
+
+          data_annual.push({
+            "Year"                  : i / 12,
+            "Calendar year"         : date.getFullYear(),
+            "Maintenance"           : maintenanceSchedule[i/12],
+            "Insurance"             : Math.round(insurancePerYear * (1 + (i / 12) * .02)),
+            "SREC revenue"          : srec_revenue_annual,
+            "Net metering savings"  : net_metering_savings_annual,
+            "Net income"            : srec_revenue_annual + net_metering_savings_annual - Math.round(insurancePerYear * (1 + (i / 12) * .02)) - maintenanceSchedule[i/12]
+          })
+          srec_revenue_accrued_last_year = srec_revenue_accrued
+          net_metering_savings_accrued_last_year = net_metering_savings_accrued
+
+        }
+
         date.setMonth(date.getMonth() + 1)
       }
 
@@ -279,9 +338,49 @@ $(document).ready(function(){
 
       render(system_summary, data_first_year, data_monthly, data_quarterly, data_annual)
       render_p(srec_market_sector, annual_production, initial_srec_value, utility_rate, system_cost_after)
+      render_table(data_annual)
     })
   })
 })
+
+function render_table(data_annual) {
+  const table = d3.select("#output_table")
+  table.html("")
+
+  const thead = table.append("table").attr("class","table").attr("id","annual_production_table").append("thead").append("tr")
+
+  thead.append("th").text("Year")
+  thead.append("th").text("Calendar year")
+  thead.append("th").text("Maintenance")
+  thead.append("th").text("Insurance")
+  thead.append("th").text("SREC revenue")
+  thead.append("th").text("Net metering savings")
+  thead.append("th").text("Net income")
+
+  const tbody = d3.select("#annual_production_table").append("tbody")
+  const trow = tbody.selectAll("tr")
+                    .data(data_annual)
+                    .enter()
+                    .append("tr")
+  trow.append("td").text((d) => d["Year"])
+  trow.append("td").text((d) => d["Calendar year"])
+  trow.append("td").text((d) => d["Maintenance"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
+  trow.append("td").text((d) => d["Insurance"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
+  trow.append("td").text((d) => d["SREC revenue"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
+  trow.append("td").text((d) => d["Net metering savings"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
+  trow.append("td").text((d) => d["Net income"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
+
+//   var add_annual_production_table=d3.select("#info-row").append("div").attr("class","col-md-7").append("table").attr("class","table").attr("id","annual_production_table");
+//   var thead=add_annual_production_table.append("thead").append("tr");thead.append("th").text("Month")
+// thead.append("th").text("Production")
+// thead.append("th").text("SREC")
+// thead.append("th").text("Util")
+// thead.append("th").text("Cumulative")
+// var tbody=d3.select("#annual_production_table").append("tbody");var trow=tbody.selectAll("tr").data(dataArr).enter().append("tr");trow.append("td").text(function(d){return d.current_month;});trow.append("td").text(function(d){return Math.round(d.monthly_output).toLocaleString("en-US");});trow.append("td").text(function(d){return d.current_srec_value.toLocaleString("en-US",{style:"currency",currency:"USD"})})
+// trow.append("td").text(function(d){return d.current_util_rate.toLocaleString("en-US",{style:"currency",currency:"USD"})})
+// trow.append("td").text(function(d){return d.current_system_cost.toLocaleString("en-US",{style:"currency",currency:"USD"})}).attr("class",function(d){return+d.current_system_cost<0?"negative":"positive";});var sum_row=tbody.append("tr").attr("class","sum");});event.preventDefault();});});</script>
+
+}
 
 function render_p(srec_market_sector, annual_production, initial_srec_value, utility_rate, system_cost_after) {
   let p = d3.select("#output_p")
