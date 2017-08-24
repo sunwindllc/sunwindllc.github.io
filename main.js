@@ -1,4 +1,12 @@
 $(document).ready(function(){
+  const inputs = document.querySelectorAll("input")
+  let inputValueList = JSON.parse(localStorage.getItem("inputValues")) || []
+
+  function populateInputs(a = [], aList) {
+    a.forEach((a, i) => a.value = aList[i])
+  }
+  populateInputs(inputs, inputValueList)
+
   $("#date_picker").datetimepicker({
       viewMode: "months",
       format: "MM/YYYY"
@@ -96,9 +104,16 @@ $(document).ready(function(){
   })
 
   $("#form").submit(function(event) {
+    event.preventDefault()
+
     let promises = [], ac_monthly_array = []
 
     getSystemCapacity()
+
+    inputs.forEach(input => {
+      inputValueList.push(input.value)
+    })
+    localStorage.setItem("inputValues", JSON.stringify(inputValueList))
 
     for (i = 0; i <= array_index; i++) {
       let formData = {
@@ -126,8 +141,6 @@ $(document).ready(function(){
 
       promises.push(request)
     }
-
-    event.preventDefault()
 
     $.when.apply(null, promises).done(function() {
 
@@ -300,9 +313,9 @@ $(document).ready(function(){
           data_annual.push({
             "Year"                  : i / 12,
             "Calendar year"         : date.getFullYear(),
-            "Maintenance"           : maintenanceSchedule[i/12],
+            "Maintenance"           : maintenanceSchedule[i/12] != 0 ? maintenanceSchedule[i/12] : "",
             "Insurance"             : Math.round(insurancePerYear * (1 + (i / 12) * .02)),
-            "SREC revenue"          : srec_revenue_annual,
+            "SREC revenue"          : srec_revenue_annual != 0 ? srec_revenue_annual : "",
             "Net metering savings"  : net_metering_savings_annual,
             "Net income"            : srec_revenue_annual + net_metering_savings_annual - Math.round(insurancePerYear * (1 + (i / 12) * .02)) - maintenanceSchedule[i/12]
           })
