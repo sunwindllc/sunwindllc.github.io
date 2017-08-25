@@ -3,7 +3,9 @@ $(document).ready(function(){
   let inputValueList = JSON.parse(localStorage.getItem("inputValues")) || []
 
   function populateInputs(a = [], aList) {
-    a.forEach((a, i) => a.value = aList[i])
+    a.forEach((a, i) => {
+      if (aList[i]) return a.value = aList[i]
+    })
   }
   populateInputs(inputs, inputValueList)
 
@@ -110,9 +112,11 @@ $(document).ready(function(){
 
     getSystemCapacity()
 
+    inputValueList = []
     inputs.forEach(input => {
       inputValueList.push(input.value)
     })
+    console.log(JSON.stringify(inputValueList))
     localStorage.setItem("inputValues", JSON.stringify(inputValueList))
 
     for (i = 0; i <= array_index; i++) {
@@ -313,9 +317,9 @@ $(document).ready(function(){
           data_annual.push({
             "Year"                  : i / 12,
             "Calendar year"         : date.getFullYear(),
-            "Maintenance"           : maintenanceSchedule[i/12] != 0 ? maintenanceSchedule[i/12] : "",
+            "Maintenance"           : maintenanceSchedule[i/12] != "0" ? maintenanceSchedule[i/12] : "",
             "Insurance"             : Math.round(insurancePerYear * (1 + (i / 12) * .02)),
-            "SREC revenue"          : srec_revenue_annual != 0 ? srec_revenue_annual : "",
+            "SREC revenue"          : srec_revenue_annual != "0" ? srec_revenue_annual : "",
             "Net metering savings"  : net_metering_savings_annual,
             "Net income"            : srec_revenue_annual + net_metering_savings_annual - Math.round(insurancePerYear * (1 + (i / 12) * .02)) - maintenanceSchedule[i/12]
           })
@@ -362,7 +366,6 @@ function render_table(data_annual) {
 
   const thead = table.append("table").attr("class","table").attr("id","annual_production_table").append("thead").append("tr")
 
-  thead.append("th").text("Year")
   thead.append("th").text("Calendar year")
   thead.append("th").text("Maintenance")
   thead.append("th").text("Insurance")
@@ -375,23 +378,12 @@ function render_table(data_annual) {
                     .data(data_annual)
                     .enter()
                     .append("tr")
-  trow.append("td").text((d) => d["Year"])
   trow.append("td").text((d) => d["Calendar year"])
   trow.append("td").text((d) => d["Maintenance"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
   trow.append("td").text((d) => d["Insurance"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
   trow.append("td").text((d) => d["SREC revenue"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
   trow.append("td").text((d) => d["Net metering savings"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
   trow.append("td").text((d) => d["Net income"].toLocaleString("en-US",{style:"currency",currency:"USD"}).slice(0, -3))
-
-//   var add_annual_production_table=d3.select("#info-row").append("div").attr("class","col-md-7").append("table").attr("class","table").attr("id","annual_production_table");
-//   var thead=add_annual_production_table.append("thead").append("tr");thead.append("th").text("Month")
-// thead.append("th").text("Production")
-// thead.append("th").text("SREC")
-// thead.append("th").text("Util")
-// thead.append("th").text("Cumulative")
-// var tbody=d3.select("#annual_production_table").append("tbody");var trow=tbody.selectAll("tr").data(dataArr).enter().append("tr");trow.append("td").text(function(d){return d.current_month;});trow.append("td").text(function(d){return Math.round(d.monthly_output).toLocaleString("en-US");});trow.append("td").text(function(d){return d.current_srec_value.toLocaleString("en-US",{style:"currency",currency:"USD"})})
-// trow.append("td").text(function(d){return d.current_util_rate.toLocaleString("en-US",{style:"currency",currency:"USD"})})
-// trow.append("td").text(function(d){return d.current_system_cost.toLocaleString("en-US",{style:"currency",currency:"USD"})}).attr("class",function(d){return+d.current_system_cost<0?"negative":"positive";});var sum_row=tbody.append("tr").attr("class","sum");});event.preventDefault();});});</script>
 
 }
 
