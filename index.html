@@ -12,14 +12,15 @@
 <style>
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1.4em !important;
   }
 </style>
 
 
-<div class="container-fluid">
+<div class="container">
   <div class="row">
     <form id="form">
-      <div class="form col-md-6 col-xs-12">
+      <div class="form col-xs-8 col-sm-offset-2">
         <div class="row">
           <div id="array_row_0" class="array">
             <div class="col-xs-12">
@@ -137,15 +138,15 @@
             <div class="input-group">
              <span class="input-group-addon">$</span>
              <input type="text" class="form-control" name="initial_srec_value" id="initial_srec_value" placeholder="245" value="245">
-             <span class="input-group-addon"> / kWh</span>
+             <span class="input-group-addon"> / MWh</span>
             </div>
           </div>
           <div class="form-group col-md-3 col-xs-6">
             <label for="initial_srec_value">Nantucket Rebate?</label>
             <div class="input-group">
               <select class="form-control" name="nantucket_rebate" id="nantucket_rebate">
-                <option value="2500" selected="selected">$2,500</option>
-                <option value="0">None</option>
+                <option value="0" selected="selected">None</option>
+                <option value="2500">$2,500</option>
               </select>
             </div>
           </div>
