@@ -533,7 +533,7 @@ function render(system_summary, data_first_year, data_monthly, data_quarterly, d
       .attr("height", function(d) { return height - y(d.value); })
       .attr("fill", function(d) { return z(d.key); });
 
- console.log(data_first_year);
+ console.log("data_first_year:", JSON.stringify(data_first_year));
 
   g.append("g")
       .attr("class", "axis")
@@ -601,7 +601,11 @@ function render(system_summary, data_first_year, data_monthly, data_quarterly, d
 
   x0.domain(data_first_year.map(function(d) { return d.Month; }));
   x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-  y.domain([0, d3.max(data_first_year, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
+
+  y.domain([
+    d3.min(data_first_year, (d) => d3.min(keys, (key) => d[key])),
+    d3.max(data_first_year, (d) => d3.max(keys, (key) => d[key]))
+  ]).nice();
 
   g.append("g")
     .selectAll("g")
@@ -612,9 +616,11 @@ function render(system_summary, data_first_year, data_monthly, data_quarterly, d
     .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
     .enter().append("rect")
       .attr("x", function(d) { return x1(d.key); })
-      .attr("y", function(d) { return y(d.value); })
+      .attr("y", (d) => d.value > 0 ?
+                        y(d.value) :
+                        y(0))
       .attr("width", x1.bandwidth())
-      .attr("height", function(d) { return height - y(d.value); })
+      .attr("height", function(d) { return Math.abs(y(d.value) - y(0)); })
       .attr("fill", function(d) { return z(d.key); });
 
   g.append("g")
